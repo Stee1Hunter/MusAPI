@@ -1,0 +1,31 @@
+﻿services:
+  musapi:
+    image: musapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - musapi
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: kaiser
+      POSTGRES_PASSWORD: bebebe228bebebe
+      POSTGRES_DB: music_app
+    networks:
+      - musapi
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+networks:
+  musapi:
+
+volumes:
+  pgdata:
